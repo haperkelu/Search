@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import junit.framework.Assert;
+
 import org.apache.commons.math.linear.OpenMapRealVector;
 import org.apache.commons.math.linear.RealVectorFormat;
 import org.apache.commons.math.linear.SparseRealVector;
@@ -37,6 +39,7 @@ public class SimilarService {
 	
 	public Map<String, Double> analysis(String[] content) throws Exception{
 		
+		Assert.assertNull(content);
 		Map<String, Double> result = new HashMap<String, Double>();
 		if(content == null || content.length == 0){
 			return null;
@@ -83,7 +86,7 @@ public class SimilarService {
 			          docs[i].setEntry(termTexts[j], termFreqs[j]);
 			     }
 			 }
-			 docs[i].normalize();
+			 //docs[i].normalize();
 		}		
 		
 		double cosim01 = getCosineSimilarity(docs[0], docs[1]);
@@ -109,7 +112,7 @@ public class SimilarService {
 	* @throws
 	 */
 	private double getCosineSimilarity(DocVector d1, DocVector d2) {
-	    return (d1.vector.dotProduct(d2.vector)) /       //向量相乘之和
+	    return (d1.vector.dotProduct(d2.vector)) /       //向量交叉相乘之和
 	      (d1.vector.getNorm() * d2.vector.getNorm());   //L2 Norm Sum
 	}
 	
