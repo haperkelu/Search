@@ -143,6 +143,7 @@ public class CharNode {
 	}
 	
 	private static class TreeNode {
+		@SuppressWarnings("unused")
 		char key;
 		Map<Character, TreeNode> subNodes;
 		boolean alsoLeaf;

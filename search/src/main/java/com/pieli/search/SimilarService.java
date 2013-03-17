@@ -39,7 +39,7 @@ public class SimilarService {
 	
 	public Map<String, Double> analysis(String[] content) throws Exception{
 		
-		Assert.assertNull(content);
+		Assert.assertNotNull(content);
 		Map<String, Double> result = new HashMap<String, Double>();
 		if(content == null || content.length == 0){
 			return null;

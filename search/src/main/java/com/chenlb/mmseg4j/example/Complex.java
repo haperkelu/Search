@@ -79,5 +79,9 @@ public class Complex {
 		
 		new Complex().run(args);
 	}
+	
+	public void forTest(String[] args) throws IOException {
+		new Complex().run(args);
+	}
 
 }

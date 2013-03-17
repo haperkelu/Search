@@ -3,12 +3,11 @@ package com.chenlb.mmseg4j.analysis;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
 import com.chenlb.mmseg4j.Word;
@@ -22,7 +21,7 @@ public class CutLetterDigitFilter extends TokenFilter {
 
 	protected Queue<Token> tokenQueue = new LinkedList<Token>();
 	
-	private TermAttribute termAtt;
+	private CharTermAttribute termAtt;
     private OffsetAttribute offsetAtt;
     private TypeAttribute typeAtt;
     private Token reusableToken;
@@ -31,7 +30,7 @@ public class CutLetterDigitFilter extends TokenFilter {
 		super(input);
 		
 		reusableToken = new Token();
-		termAtt = (TermAttribute)addAttribute(TermAttribute.class);
+		termAtt = (CharTermAttribute)addAttribute(CharTermAttribute.class);
 		offsetAtt = (OffsetAttribute)addAttribute(OffsetAttribute.class);
 		typeAtt = (TypeAttribute)addAttribute(TypeAttribute.class);
 	}
@@ -41,6 +40,7 @@ public class CutLetterDigitFilter extends TokenFilter {
 		return nextToken(reusableToken);
 	}
 	
+
 	private Token nextToken(Token reusableToken) throws IOException {
 		assert reusableToken != null;
 		
@@ -97,6 +97,7 @@ public class CutLetterDigitFilter extends TokenFilter {
 	}
 	
 	private void addToken(Token oriToken, int termBufferOffset, int termBufferLength, byte type) {
+		@SuppressWarnings("deprecation")
 		Token token = new Token(oriToken.termBuffer(), termBufferOffset, termBufferLength, 
 				oriToken.startOffset()+termBufferOffset, oriToken.startOffset()+termBufferOffset+termBufferLength);
 		
@@ -123,7 +124,7 @@ public class CutLetterDigitFilter extends TokenFilter {
 		clearAttributes();
 		Token token = nextToken(reusableToken);
 		if(token != null) {
-			termAtt.setTermBuffer(token.termBuffer(), 0, token.termLength());
+			termAtt.append(new String(token.termBuffer()), 0, token.termLength());
 			offsetAtt.setOffset(token.startOffset(), token.endOffset());
 			typeAtt.setType(token.type());
 			return true;

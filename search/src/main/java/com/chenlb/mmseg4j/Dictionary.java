@@ -141,6 +141,7 @@ public class Dictionary {
 		});
 	}
 	
+	@SuppressWarnings("resource")
 	private Map<Character, CharNode> loadDic(File wordsPath) throws IOException {
 		InputStream charsIn = null;
 		File charsFile = new File(wordsPath, "chars.dic");
@@ -210,6 +211,7 @@ public class Dictionary {
 		log.info("words loaded time="+(now()-s)+"ms, line="+lineNum+", on file="+wordsFile);
 	}
 	
+	@SuppressWarnings("resource")
 	private Map<Character, Object> loadUnit(File path) throws IOException {
 		InputStream fin = null;
 		File unitFile = new File(path, "units.dic");

@@ -14,6 +14,7 @@ public class MaxWordSeg extends ComplexSeg {
 		super(dic);
 	}
 
+	@SuppressWarnings("unused")
 	public Chunk seg(Sentence sen) {
 		
 		Chunk chunk = super.seg(sen);
